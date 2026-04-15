@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title id="app-title">Jadwal Sholat MKI - Premium Edition</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@400;700&display=swap');
@@ -28,7 +28,10 @@
                 url("https://unsplash.com/photos/IAwnp88Fz8Y/download?force=true&w=1920");
             background-size: cover; background-position: center; background-attachment: fixed;
             font-family: 'Montserrat', sans-serif;
-            width: 100vw; height: 100vh; overflow: hidden;
+            width: 100vw; 
+            height: 100vh; /* Fallback */
+            height: 100dvh; /* Dynamic Viewport untuk iOS/Android agar tidak tertutup URL Bar */
+            overflow: hidden;
             display: flex; flex-direction: column; color: var(--text-light); transition: all 0.5s ease;
         }
 
@@ -40,7 +43,7 @@
         }
 
         /* --- LAYOUT UTAMA --- */
-        .app-wrapper { display: flex; flex: 1; width: 100%; height: calc(100vh - 8vh); padding: 2vh 2vw; gap: 2vw; position: relative; z-index: 1; }
+        .app-wrapper { display: flex; flex: 1; width: 100%; height: calc(100dvh - 8vh); padding: 2vh 2vw; gap: 2vw; position: relative; z-index: 1; }
 
         /* --- PANEL KIRI --- */
         .info-panel {
@@ -60,7 +63,7 @@
         .date-display { font-size: 1.8vh; font-weight: 600; color: var(--text-light); margin-top: 1.5vh; opacity: 0.9;}
         #hijri-date { color: var(--accent-color); font-size: 2.2vh; margin-top: 0.5vh; font-weight: 800; opacity: 1;}
 
-        .countdown-box { margin-top: 2.5vh; background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0,0.2)); padding: 1.5vh 3vw; border-radius: 15px; border-left: 5px solid var(--accent-color); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .countdown-box { margin-top: 2.5vh; background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0,0.2)); padding: 1.5vh 3vw; border-radius: 15px; border-left: 5px solid var(--accent-color); box-shadow: 0 4px 10px rgba(0,0,0,0.3); width: 100%;}
         #next-prayer-label { font-size: 1.5vh; opacity: 0.9; text-transform: uppercase; display: block; color: var(--text-light);}
         #countdown-timer { font-size: 3.5vh; font-weight: 800; color: var(--accent-color); display: block;}
 
@@ -69,7 +72,7 @@
         .schedule-title { text-align: center; color: var(--accent-color); font-size: 2vh; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 0.5vh; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
         .schedule-title::before, .schedule-title::after { content: ''; height: 2px; flex: 1; background: linear-gradient(90deg, transparent, var(--accent-color), transparent); opacity: 0.7; }
         
-        .schedule-row { display: flex; align-items: center; background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)); border: 1px solid var(--glass-border); border-radius: 15px; padding: 1.2vh 2vw; transition: all 0.4s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .schedule-row { display: flex; align-items: center; background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur)); border: 1px solid var(--glass-border); border-radius: 15px; padding: 1.2vh 2vw; transition: all 0.4s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .col-name { flex: 1; font-size: 2.5vh; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);}
         .col-time { flex: 1; text-align: center; font-size: 4.2vh; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
         .col-iqamah { flex: 1; text-align: right; display: flex; flex-direction: column; justify-content: center; }
@@ -100,8 +103,8 @@
         .copyright-footer { background-color: var(--secondary-color); color: #888; font-size: 1.5vh; font-family: 'Roboto', sans-serif; text-align: center; height: 2.5vh; display: flex; align-items: center; justify-content: center; border-top: 1px solid rgba(255,255,255,0.05); z-index: 5; }
 
         /* --- OVERLAY & POPUP --- */
-        #overlay-start, #popup-iqomah { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; z-index: 9999; }
-        #overlay-start { background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px); cursor: pointer; }
+        #overlay-start, #popup-iqomah { position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; z-index: 9999; }
+        #overlay-start { background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); cursor: pointer; }
         #overlay-start h1 { font-size: 5vh; color: var(--accent-color); animation: pulseText 1.5s infinite; }
         #overlay-start p { font-size: 2.5vh; margin-top: 1vh;}
         
@@ -114,20 +117,20 @@
         .popup-boxes { display: flex; gap: 3vw; width: 100%; height: 35vh; margin-top: 2vh; }
         .popup-box { flex: 1; position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.2); background: #fff; border: 2px solid var(--accent-color); display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .popup-box.qris { background: #ffffff; padding: 2vh; }
-        .popup-box.qris img { width: 100%; height: 100%; object-fit: contain; position: absolute;}
+        .popup-box.qris img { width: 100%; height: 100%; object-fit: contain; position: absolute; }
 
         /* --- SETTINGS PANEL & PIN --- */
         .btn-settings { position: fixed; bottom: 4vh; left: 1vw; z-index: 10000; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; transition: all 0.3s; opacity: 0.3; }
         .btn-settings:hover { opacity: 1; background: var(--primary-color); transform: rotate(90deg); }
         
-        #pin-modal, #settings-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 10001; justify-content: center; align-items: center; font-family: 'Roboto', sans-serif; color: #333; backdrop-filter: blur(5px);}
+        #pin-modal, #settings-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; background: rgba(0,0,0,0.8); z-index: 10001; justify-content: center; align-items: center; font-family: 'Roboto', sans-serif; color: #333; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);}
         
         .pin-content { background: #fff; padding: 40px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); max-width: 400px; width: 90%; }
         .pin-content h2 { color: var(--primary-color); margin-bottom: 10px; font-family: 'Montserrat', sans-serif; }
         .pin-content input { width: 100%; padding: 15px; font-size: 28px; text-align: center; letter-spacing: 10px; border: 2px solid #ccc; border-radius: 10px; margin: 20px 0; outline: none; }
         .pin-content input:focus { border-color: var(--primary-color); }
         
-        .settings-content { background: #fff; width: 95vw; max-width: 900px; height: 90vh; border-radius: 15px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .settings-content { background: #fff; width: 95vw; max-width: 900px; height: 90dvh; border-radius: 15px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         .settings-header { background: #eee; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
         .settings-header h2 { margin: 0; font-size: 20px; color: #333; font-family: 'Montserrat', sans-serif;}
         .close-btn { background: none; border: none; font-size: 28px; cursor: pointer; color: #888; }
@@ -175,34 +178,38 @@
         }
         
         @media (orientation: portrait) {
-            .app-wrapper { flex-direction: column; height: calc(100vh - 6vh); padding: 1.5vh; gap: 1.5vh;}
+            .app-wrapper { flex-direction: column; height: calc(100dvh - 8vh); padding: 1.5vh; gap: 1.5vh;}
             
-            .info-panel { width: 100%; padding: 1.5vh; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 1vh; flex: none; }
+            /* Info Panel Ringkas */
+            .info-panel { width: 100%; padding: 1.5vh; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 1vh; flex: 0 0 auto; }
             .header-brand { width: 100%; margin-bottom: 0; }
             .logo img { height: 6vh; }
             .masjid-name { font-size: 2.2vh; }
-            .time-display { width: 48%; padding: 1vh; flex-grow: 1; }
-            #clock-main { font-size: 4vh; }
+            .time-display { width: 48%; padding: 1vh; flex: 1 1 45%; }
+            #clock-main { font-size: 4vh; margin: 0;}
             .date-display, #hijri-date { font-size: 1.4vh; }
-            .countdown-box { width: 48%; margin-top: 0; padding: 1vh; flex-grow: 1; }
+            .countdown-box { width: 48%; margin-top: 0; padding: 1vh; flex: 1 1 45%; }
             #countdown-timer { font-size: 2.5vh; }
 
-            .schedule-panel { width: 100%; flex: none; margin-bottom: 0; }
+            /* Jadwal Sholat Membelah 2 Kolom (Grid) */
+            .schedule-panel { width: 100%; flex: 0 0 auto; margin-bottom: 0; }
             .schedule-title { font-size: 1.5vh; margin-bottom: 1vh; }
             #schedule-container { display: grid !important; grid-template-columns: 1fr 1fr; gap: 1vh; }
             .schedule-row { padding: 1vh; height: auto; border-radius: 10px; flex-direction: column; text-align: center;}
             .col-name { font-size: 1.6vh; text-align: center; width: 100%; padding: 0;}
             .col-time { font-size: 3vh; width: 100%; margin: 0.5vh 0;}
-            .col-iqamah { text-align: center; width: 100%; padding: 0;}
+            .col-iqamah { text-align: center; width: 100%; padding: 0; flex-direction: row; gap: 5px; align-items: center;}
             .iqamah-time { font-size: 1.8vh; }
 
-            .media-panel { width: 100%; flex-direction: row; flex: 1; min-height: 0; gap: 1vh;}
+            /* Media Panel Sisa Ruang */
+            .media-panel { width: 100%; flex-direction: row; flex: 1 1 auto; min-height: 15vh; gap: 1vh;}
             .qris-header { font-size: 1.5vh; margin-bottom: 0.5vh; padding-bottom: 0.5vh; }
-            .popup-boxes { height: 25vh; }
+            .popup-boxes { height: 25vh; flex-direction: row;}
             #popup-iqomah .timer { font-size: 15vh; }
             
+            /* Penyesuaian Modal Setting */
             .settings-body { flex-direction: column; }
-            .settings-sidebar { width: 100%; flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid #ddd; }
+            .settings-sidebar { width: 100%; flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid #ddd; flex: 0 0 auto; }
             .tab-btn { border-left: none; border-bottom: 4px solid transparent; white-space: nowrap; }
             .tab-btn.active { border-left-color: transparent; border-bottom-color: #0d47a1; }
         }
@@ -264,13 +271,12 @@
                 Jadwal Sholat
             </div>
             <div id="schedule-container">
-                <div style="text-align:center; width:100%;">Mengunduh Jadwal Abadi...</div>
+                <div style="text-align:center; width:100%;">Mengunduh Jadwal Abadi Internasional...</div>
             </div>
         </div>
 
         <div class="media-panel">
             <div class="media-box slider-box" id="slider-container"></div>
-            
             <div class="media-box qris-box">
                 <div class="qris-header">Infaq & Shodaqoh</div>
                 <div class="qris-img-container">
@@ -420,7 +426,7 @@
                         <div class="form-group">
                             <label style="color:#d4af37;">Daftar Gambar Slideshow POPUP IQOMAH (Pisahkan koma)</label>
                             <textarea id="set-popup-slideshow"></textarea>
-                            <small style="color:#888;">Gambar yang berputar khusus saat waktu sholat tiba.</small>
+                            <small style="color:#888;">Gambar yang akan berputar khusus saat waktu sholat tiba.</small>
                         </div>
                         <div class="form-group"><label>Interval Pindah Slide (Detik)</label><input type="number" id="set-interval" min="3" max="60"></div>
                         <div class="form-group"><label>Teks Layar Awal (Overlay)</label><input type="text" id="set-overlay-text"></div>
@@ -456,7 +462,7 @@
     </div>
 
     <script>
-        // --- 1. DEFAULT CONFIGURATION & ANTI-ERROR MERGE ---
+        // --- 1. DEFAULT CONFIGURATION ---
         const defaultConfig = {
             keamanan: { pin: "115533" },
             identitas: {
@@ -481,7 +487,7 @@
             }
         };
 
-        // Smart Deep Merge untuk mencegah Error JS jika ada config lama
+        // --- 2. SMART MERGE CONFIG ---
         let currentConfig = JSON.parse(JSON.stringify(defaultConfig));
         let savedStr = localStorage.getItem('mki_config');
         if (savedStr) {
@@ -495,7 +501,7 @@
                     if (parsed.lanjutan) currentConfig.lanjutan = { ...currentConfig.lanjutan, ...parsed.lanjutan };
                     if (parsed.keamanan) currentConfig.keamanan = { ...currentConfig.keamanan, ...parsed.keamanan };
                 }
-            } catch(e) { console.log("Config lama rusak, mereset ke pengaturan pabrik."); }
+            } catch(e) { console.log("Resetting config due to parse error."); }
         }
 
         let jadwalHariIni = [];
@@ -504,8 +510,9 @@
         let isEngineStarted = false;
         let sliderIntervalTimer;
 
-        // Tautkan Event Listener di Javascript (Lebih aman dari onclick HTML)
+        // Tautkan Event Listener untuk tap awal
         document.getElementById('overlay-start').addEventListener('click', initApp);
+        document.getElementById('overlay-start').addEventListener('touchstart', initApp, {once:true});
 
         function applyConfigToApp() {
             document.documentElement.style.setProperty('--primary-color', currentConfig.tema.primary);
@@ -584,6 +591,7 @@
             }
         }
 
+        // 100% API Kemenag untuk Hijriah
         const namaBulanHijriah = ["Muharram", "Shafar", "Rabi'ul Awal", "Rabi'ul Akhir", "Jumadil Awal", "Jumadil Akhir", "Rajab", "Sya'ban", "Ramadhan", "Syawal", "Dzulqa'dah", "Dzulhijjah"];
         let tanggalHijriahAkurat = "Memuat hijriah...";
 
@@ -612,7 +620,7 @@
                 renderSchedule();
             } catch (error) {
                 console.error("Gagal memuat jadwal:", error);
-                document.getElementById('schedule-container').innerHTML = `<div style="text-align:center; color:#ffaaaa; font-weight:bold;">Gagal memuat jadwal API Aladhan.</div>`;
+                document.getElementById('schedule-container').innerHTML = `<div style="text-align:center; color:#ffaaaa; font-weight:bold;">Gagal memuat jadwal. Pastikan koneksi internet aktif.</div>`;
             }
         }
 
@@ -663,7 +671,7 @@
             if(currentConfig.lanjutan.useAdzan) {
                 const adzanAudio = document.getElementById('audio-adzan');
                 adzanAudio.currentTime = 0;
-                adzanAudio.play().catch(e => console.log("Adzan autoplay dicegah browser:", e));
+                adzanAudio.play().catch(e => console.log("Adzan error:", e));
             }
 
             let timeLeft = parseInt(currentConfig.jadwal.iqamah) * 60; 
@@ -693,12 +701,12 @@
             document.getElementById('clock-main').innerHTML = `${hDisplay}:${mDisplay}<span style="font-size: 0.5em; opacity: 0.9; margin-left: 2px;">:${sDisplay}</span>`;
             document.getElementById('date-masehi').innerText = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             
-            // Tampilkan tanggal Hijriah HANYA jika sudah sukses ter-fetch, jika tidak pakai format lokal bawaan HP sbg cadangan sementara
-            if (tanggalHijriahAkurat !== "Memuat hijriah...") {
+            // Render dari API, tidak pakai Intl bawaan jika API sudah ada isinya
+            if(tanggalHijriahAkurat !== "Memuat hijriah...") {
                 document.getElementById('hijri-date').innerText = tanggalHijriahAkurat;
             }
 
-            if(jadwalHariIni.length === 0) return; // Hentikan render jadwal di bawah jika belum terunduh, tapi biarkan jam terus berdetak.
+            if(jadwalHariIni.length === 0) return; 
 
             let nextIdx = 0; let activeIdx = -1;
             for (let i = 0; i < jadwalHariIni.length; i++) {
@@ -743,13 +751,12 @@
                 isEngineStarted = true;
                 
                 document.getElementById('overlay-start').style.display = 'none';
-                
                 if(currentConfig.lanjutan.useFullscreen) toggleFullScreen();
                 
                 try {
                     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                     if (audioCtx.state === 'suspended') audioCtx.resume();
-                } catch(e) { console.error("Audio block", e); }
+                } catch(e) {}
 
                 if(currentConfig.lanjutan.useAdzan) {
                     const adzanAudio = document.getElementById('audio-adzan');
@@ -757,16 +764,10 @@
                     adzanAudio.play().then(() => { adzanAudio.pause(); adzanAudio.currentTime = 0; }).catch(e=>{});
                 }
 
-                // Jalankan jam segera!
                 updateEngine();
                 setInterval(updateEngine, 1000);
-                
-                // Fetch jadwal berjalan terpisah
                 fetchJadwalAbadi();
-                
-            } catch(error) {
-                alert("Kesalahan Sistem: " + error.message);
-            }
+            } catch(error) { console.error("Initialization error:", error); }
         }
 
         function openPinModal() {
@@ -861,6 +862,7 @@
         }
 
         function saveSettings() {
+            // Anti-Error Fallback jika input kosong
             let parsedOpacity = parseFloat(document.getElementById('set-opacity').value);
             if(isNaN(parsedOpacity)) parsedOpacity = 0.4; 
             let parsedBlur = parseInt(document.getElementById('set-blur').value);
